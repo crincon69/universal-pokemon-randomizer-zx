@@ -68,6 +68,11 @@ public class Gen2RomHandler extends AbstractGBCRomHandler {
         super(random, logStream);
     }
 
+    @Override
+    public int getAbsolutePokeNumOfTrainerPokemon(TrainerPokemon tp) {
+        return tp.pokemon.number;
+    }
+
     private static class RomEntry {
         private String name;
         private String romCode;
@@ -280,6 +285,7 @@ public class Gen2RomHandler extends AbstractGBCRomHandler {
     private boolean isVietCrystal;
     private ItemList allowedItems, nonBadItems;
     private long actualCRC32;
+    private boolean effectivenessUpdated;
 
     @Override
     public boolean detectRom(byte[] rom) {
@@ -2187,6 +2193,11 @@ public class Gen2RomHandler extends AbstractGBCRomHandler {
         }
     }
 
+    @Override
+    public boolean isEffectivenessUpdated() {
+        return effectivenessUpdated;
+    }
+
     private void randomizeCatchingTutorial() {
         if (romEntry.arrayEntries.containsKey("CatchingTutorialOffsets")) {
             // Pick a pokemon
@@ -2241,6 +2252,7 @@ public class Gen2RomHandler extends AbstractGBCRomHandler {
         }
         logBlankLine();
         writeTypeEffectivenessTable(typeEffectivenessTable);
+        effectivenessUpdated = true;
     }
 
     private List<TypeRelationship> readTypeEffectivenessTable() {

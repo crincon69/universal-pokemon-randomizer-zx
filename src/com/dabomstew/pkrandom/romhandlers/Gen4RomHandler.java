@@ -5248,6 +5248,11 @@ public class Gen4RomHandler extends AbstractDSRomHandler {
         }
     }
 
+    @Override
+    public boolean isEffectivenessUpdated() {
+        return effectivenessUpdated;
+    }
+
     private void randomizeCatchingTutorial() {
         int opponentOffset = romEntry.getInt("CatchingTutorialOpponentMonOffset");
 
